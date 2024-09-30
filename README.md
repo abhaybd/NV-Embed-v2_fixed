@@ -1,6 +1,7 @@
 ---
 tags:
 - mteb
+- sentence-transformers
 model-index:
 - name: NV-Embed-v2
   results:
