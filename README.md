@@ -2114,7 +2114,7 @@ For commercial purpose, we recommend you to use the models of [NeMo Retriever Mi
 
 
 ## Correspondence to
-Chankyu Lee (chankyul@nvidia.com), Wei Ping (wping@nvidia.com)
+Chankyu Lee (chankyul@nvidia.com), Rajarshi Roy (rajarshir@nvidia.com), Wei Ping (wping@nvidia.com)
 
 
 ## Citation
