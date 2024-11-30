@@ -76,6 +76,8 @@ class LatentAttentionConfig(PretrainedConfig):
         self.latent_dim = latent_dim
         self.cross_dim_head = cross_dim_head
 
+        super().__init__(**kwargs)
+
 
 class BidirectionalMistralConfig(MistralConfig):
     model_type = BIDIR_MISTRAL_TYPE
