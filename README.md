@@ -2107,14 +2107,6 @@ scores = (query_embeddings @ passage_embeddings.T) * 100
 print(scores.tolist())
 ```
 
-### Usage (Infinity)
-
-Usage via [Infinity, MIT License](https://github.com/michaelfeil/infinity).
-```bash
-docker run -it --gpus all  -v ./data:/app/.cache -p 7997:7997 michaelf34/infinity:0.0.70 \
-v2 --model-id nvidia/NV-Embed-v2 --revision "refs/pr/23" --batch-size 8
-```
-
 ## License
 This model should not be used for any commercial purpose. Refer the [license](https://spdx.org/licenses/CC-BY-NC-4.0) for the detailed terms.
 
