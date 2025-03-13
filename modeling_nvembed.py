@@ -8,7 +8,7 @@ from contextlib import nullcontext
 from transformers import AutoModel, PreTrainedTokenizerFast, BatchEncoding, DataCollatorWithPadding
 from transformers.modeling_utils import PreTrainedModel
 from transformers.models.auto import AutoTokenizer
-from transformers.models.mistral.modeling_mistral import MISTRAL_INPUTS_DOCSTRING
+from transformers.models.mistral.modeling_mistral import MISTRAL_INPUTS_DOCSTRING, MistralRotaryEmbedding
 from transformers.modeling_outputs import BaseModelOutputWithPast
 from transformers.modeling_attn_mask_utils import _prepare_4d_attention_mask, _prepare_4d_attention_mask_for_sdpa
 from transformers import MistralModel, MistralConfig
@@ -38,6 +38,7 @@ class BidirectionalMistralModel(MistralModel):
         for layer in self.layers:
             layer.self_attn.is_causal = False
         self._attn_implementation = "eager"
+        self.rotary_emb = MistralRotaryEmbedding(config=config)
 
     @add_start_docstrings_to_model_forward(MISTRAL_INPUTS_DOCSTRING)
     def forward(
@@ -57,6 +58,7 @@ class BidirectionalMistralModel(MistralModel):
             output_hidden_states if output_hidden_states is not None else self.config.output_hidden_states
         )
         use_cache = use_cache if use_cache is not None else self.config.use_cache
+        use_cache = False  # hack since there's some indexing bug when using cache
 
         return_dict = return_dict if return_dict is not None else self.config.use_return_dict
 
@@ -123,6 +125,8 @@ class BidirectionalMistralModel(MistralModel):
 
         hidden_states = inputs_embeds
 
+        position_embeddings = self.rotary_emb(hidden_states, position_ids)
+
         # decoder layers
         all_hidden_states = () if output_hidden_states else None
         all_self_attns = () if output_attentions else None
@@ -150,6 +154,7 @@ class BidirectionalMistralModel(MistralModel):
                     past_key_value=past_key_values,
                     output_attentions=output_attentions,
                     use_cache=use_cache,
+                    position_embeddings=position_embeddings,
                 )
 
             hidden_states = layer_outputs[0]
