@@ -2006,6 +2006,10 @@ language:
 license: cc-by-nc-4.0
 library_name: transformers
 ---
+
+> [!NOTE]  
+> This is simply a bugfix for NVEmbed-v2, which is not my work. The original repository can be found [here](https://huggingface.co/nvidia/NV-Embed-v2).
+
 ## Introduction
 We present NV-Embed-v2, a generalist embedding model that ranks No. 1 on the Massive Text Embedding Benchmark ([MTEB benchmark](https://huggingface.co/spaces/mteb/leaderboard))(as of Aug 30, 2024) with a score of 72.31 across 56 text embedding tasks. It also holds the No. 1 in the retrieval sub-category (a score of 62.65 across 15 tasks) in the leaderboard, which is essential to the development of RAG technology.
 
